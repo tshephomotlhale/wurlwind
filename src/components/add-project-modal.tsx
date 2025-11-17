@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { X, Paperclip } from "lucide-react";
+import Image from "next/image";
 
 export function AddProjectModal({
                                     open,
@@ -64,15 +65,20 @@ export function AddProjectModal({
                             <Input
                                 id="project-name"
                                 placeholder="e.g. MATH101"
-                                className="flex-1 placeholder:text-neutral-500 bg-neutral-800 border-neutral-700 text-white"
+                                className="flex-1 rounded-xl placeholder:text-neutral-500 bg-neutral-800 border-none focus-visible:ring-0 focus:outline-none focus-visible:outline-none text-white"
                             />
                             <Button
                                 type="button"
-                                variant="outline"
+                                variant="ghost"
                                 onClick={triggerFileInput}
-                                className="border-neutral-700 text-neutral-300 hover:bg-neutral-800 hover:text-white flex items-center gap-2"
+                                className="p-3 bg-neutral-800 rounded-xl"
                             >
-                                <Paperclip className="w-4 h-4" />
+                                <Image
+                                    src="/Icons/Paperclip.svg"
+                                    width={16}
+                                    height={16}
+                                    alt="Attachment"
+                                />
                             </Button>
                             <input
                                 ref={fileInputRef}
