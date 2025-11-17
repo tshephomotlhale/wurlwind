@@ -15,12 +15,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 {/* Main content area */}
                 <div className="flex flex-1 flex-col min-h-screen w-full">
                     {/* Header */}
-                    <div className={"sticky top-0 z-0 backdrop-blur-md"}>
                     <Header />
-                    </div>
 
                     {/* Page content */}
-                    <main className="flex-1 p-4">
+                    <main className="flex-1 p-4 pt-16">
                         {children}
                     </main>
                 </div>

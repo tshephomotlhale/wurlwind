@@ -10,7 +10,9 @@ import * as React from "react";
 
 export default function Header() {
     return (
-        <header className="flex items-center justify-between px-4 py-3">
+        <header className="fixed top-0 right-0 z-50 flex items-center justify-between px-4 py-3 backdrop-blur-md
+        transition-all"
+                style={{ left: "var(--sidebar-width)" }}>
             {/* Left Section: Sidebar Trigger + Breadcrumbs */}
             <div className="flex items-center gap-3">
                 {/* Sidebar Trigger */}

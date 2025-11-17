@@ -9,7 +9,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
     return (
         <div className="relative flex flex-col h-full  text-white">
             {/* Top Tabs */}
-            <div className="sticky top-15 z-0 backdrop-blur-md pt-2">
+            <div className="sticky top-15 z-0  pt-2">
                 <WorkspaceTabs />
             </div>
 

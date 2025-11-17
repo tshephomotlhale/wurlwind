@@ -17,14 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import {
     Plus,
-    Settings,
-    HelpCircle,
-    Globe,
-    LogOut,
-    ArrowUpRight,
-    User,
 } from "lucide-react";
-import { MoreVertical, Share2, Edit3, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { movatif } from "@/app/fonts";
 import {
