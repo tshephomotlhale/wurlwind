@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 const tabs = [
     { id: "workspace", label: "Workspace" },
-    { id: "quiz", label: "Quiz" },
+    { id: "quiz", label: "Pratice Tests" },
     { id: "flashcards", label: "Flashcards" },
     { id: "notes", label: "Notes" },
     { id: "plan", label: "Plan" },
