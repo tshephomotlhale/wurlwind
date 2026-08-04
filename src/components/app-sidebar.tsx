@@ -33,24 +33,26 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {AddProjectModal} from "@/components/add-project-modal";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const navMain = [
-    { title: "Home", icon: "/Icons/Rounded Magnifer Zoom In.svg", url: "#" },
-    { title: "Discover", icon: "/Icons/Atom.svg", url: "#" },
-    { title: "Timetable", icon: "/Icons/Calendar.svg", url: "#" },
-    { title: "Materials", icon: "/Icons/Server Minimalistic.svg", url: "#" },
-
+    { title: "Home",      icon: "/Icons/Rounded Magnifer Zoom In.svg", url: "/dashboard" },
+    { title: "Discover",  icon: "/Icons/Atom.svg",                     url: "/dashboard/discover" },
+    { title: "Timetable", icon: "/Icons/Calendar.svg",                 url: "/dashboard/timetable" },
+    { title: "Materials", icon: "/Icons/Server Minimalistic.svg",      url: "/dashboard/materials" },
 ];
 
 const navProjects = [
-    { title: "COMP201", icon: "/Icons/File Text.svg", url: "#" },
-    { title: "MATH402", icon: "/Icons/File Text.svg", url: "#" },
-    { title: "PHY301", icon: "/Icons/File Text.svg", url: "#" },
+    { title: "COMP201", icon: "/Icons/File Text.svg", url: "/dashboard/search" },
+    { title: "MATH402", icon: "/Icons/File Text.svg", url: "/dashboard/search" },
+    { title: "PHY301",  icon: "/Icons/File Text.svg", url: "/dashboard/search" },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { open } = useSidebar();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const router = useRouter();
 
     return (
         <Sidebar
@@ -66,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="gap-2 text-white hover:bg-neutral-900/70 transition"
                         >
-                            <a href="#">
+                            <Link href="/dashboard">
                                 <Image
                                     src="/Icons/Icon-Regular.svg"
                                     width={30}
@@ -80,7 +82,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     Wurlwind
                   </span>
                                 )}
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
@@ -103,7 +105,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                         asChild
                                         className="hover:bg-neutral-900/60 transition text-neutral-300 hover:text-white"
                                     >
-                                        <a href={item.url} className="flex items-center gap-3">
+                                        <Link href={item.url} className="flex items-center gap-3">
                                             <Image
                                                 src={item.icon}
                                                 width={20}
@@ -111,7 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                 alt={`${item.title} icon`}
                                             />
                                             {open && <span className="text-md">{item.title}</span>}
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
@@ -143,7 +145,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                             asChild
                                             className="flex-1 hover:bg-neutral-900/60 text-neutral-300 hover:text-white transition rounded-md"
                                         >
-                                            <a href={project.url} className="flex items-center gap-3">
+                                            <Link href={project.url} className="flex items-center gap-3">
                                                 <Image
                                                     src={project.icon}
                                                     width={20}
@@ -151,7 +153,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                     alt={`${project.title} icon`}
                                                 />
                                                 {open && <span className="text-md">{project.title}</span>}
-                                            </a>
+                                            </Link>
                                         </SidebarMenuButton>
 
                                         {open && (
@@ -258,39 +260,41 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70"
+                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70 cursor-pointer"
+                                        onClick={() => router.push("/dashboard/settings")}
                                     >
                                         <Image
                                             src="/Icons/User Circle.svg"
                                             width={18}
                                             height={18}
-                                            alt="Wurlwind logo"
+                                            alt="Account"
                                         />
                                         Account
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70"
+                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70 cursor-pointer"
+                                        onClick={() => router.push("/dashboard/settings")}
                                     >
                                         <Image
                                             src="/Icons/Settings.svg"
                                             width={18}
                                             height={18}
-                                            alt="Wurlwind logo"
+                                            alt="Settings"
                                         />
                                         Settings
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70"
+                                        className="justify-start gap-2 text-neutral-300 hover:text-white hover:bg-neutral-900/70 cursor-pointer"
                                     >
                                         <Image
                                             src="/Icons/Question Circle.svg"
                                             width={18}
                                             height={18}
-                                            alt="Wurlwind logo"
+                                            alt="Support"
                                         />
                                         Support
                                     </Button>
@@ -298,27 +302,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                                     <Button
                                         size="sm"
-                                        variant={"ghost"}
-                                        className="justify-between"
+                                        variant="ghost"
+                                        className="justify-between cursor-pointer"
+                                        onClick={() => router.push("/dashboard/settings")}
                                     >
                                         Upgrade Plan
                                         <Image
                                             src="/Icons/Arrow Right Up.svg"
                                             width={18}
                                             height={18}
-                                            alt="Wurlwind logo"
+                                            alt="Upgrade"
                                         />
                                     </Button>
 
                                     <Button
                                         size="sm"
-                                        className="justify-start gap-2 bg-red-600/10 text-red-500 hover:bg-red-600/20 mt-0.5"
+                                        className="justify-start gap-2 bg-red-600/10 text-red-500 hover:bg-red-600/20 mt-0.5 cursor-pointer"
+                                        onClick={() => router.push("/signin")}
                                     >
                                         <Image
                                             src="/Icons/Logout.svg"
                                             width={18}
                                             height={18}
-                                            alt="Wurlwind logo"
+                                            alt="Log out"
                                         />
                                         Log out
                                     </Button>

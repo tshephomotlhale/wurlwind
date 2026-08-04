@@ -3,19 +3,21 @@
 import {SidebarTrigger, useSidebar} from "@/components/ui/sidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
+import { Moon, Sun, MoreVertical } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import * as React from "react";
 import {useIsMobile} from "@/hooks/use-mobile";
+import { useTheme } from "next-themes";
 
 export default function Header() {
 
     const { state } = useSidebar();
     const isMobile = useIsMobile();
+    const { theme, setTheme } = useTheme();
 
     return (
-        <header className="fixed top-0 right-0 z-50 flex items-center justify-between px-4 py-3 backdrop-blur-md
+        <header className="fixed top-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-[#191a1a]
         transition-all"
                 style={{
                     left: isMobile
@@ -50,6 +52,14 @@ export default function Header() {
 
             {/* Right Section: Buttons + Menu */}
             <div className="flex items-center gap-2">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    aria-label="Toggle theme"
+                >
+                    {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </Button>
                 <Button
                     variant="ghost"
                 >

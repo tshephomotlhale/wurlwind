@@ -2,11 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { movatif } from "@/app/fonts";
 import Image from "next/image";
 import { X, FileText } from "lucide-react";
 import * as React from "react";
-import WorkspaceTabs from "@/components/workspacetabs";
 
 export default function AppInput() {
     const [query, setQuery] = useState("");

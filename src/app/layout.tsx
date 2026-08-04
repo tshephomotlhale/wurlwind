@@ -26,7 +26,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
         <body
             className={`${geistSans.variable} ${geistMono.variable} ${movatif.variable} antialiased min-h-screen`}
             style={{
@@ -35,9 +35,7 @@ export default function RootLayout({
         >
         <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+            defaultTheme="dark"
         >
             {children}
         </ThemeProvider>

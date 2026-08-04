@@ -1,108 +1,56 @@
-"use client";
+"use client"
 
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
-import Image from "next/image";
-import * as React from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useMemo, useState } from "react"
+import { quizzes} from "@/app/dashboard/search/quiz/quizzes";
+import { QuizGrid} from "@/app/dashboard/search/quiz/quiz-grid";
+import { QuizHeader} from "@/app/dashboard/search/quiz/quiz-header";
+import { QuizPagination} from "@/app/dashboard/search/quiz/pagination-custom";
 
-const quizzes = [
-    {
-        id: 1,
-        title: "AWS Cloud Practitioner Essentials",
-        questions: 12,
-    },
-    {
-        id: 2,
-        title: "Data Structures & Algorithms",
-        questions: 20,
-    },
-    {
-        id: 3,
-        title: "Ethical AI Principles",
-        questions: 15,
-    },
-    {
-        id: 4,
-        title: "AI in Education",
-        questions: 10,
-    },
-];
+const ITEMS_PER_PAGE = 9
 
-export default function QuizListPage() {
+export default function QuizzesPage() {
+    const [page, setPage] = useState(1)
+    const [search, setSearch] = useState("")
+    const [filter, setFilter] = useState("all")
+
+    const filteredQuizzes = useMemo(() => {
+        return quizzes.filter((quiz) => {
+            const matchesSearch = quiz.title
+                .toLowerCase()
+                .includes(search.toLowerCase())
+
+            const matchesFilter =
+                filter === "all"
+                    ? true
+                    : quiz.level.toLowerCase() === filter
+
+            return matchesSearch && matchesFilter
+        })
+    }, [search, filter])
+
+    const totalPages = Math.ceil(filteredQuizzes.length / ITEMS_PER_PAGE)
+
+    const paginatedQuizzes = filteredQuizzes.slice(
+        (page - 1) * ITEMS_PER_PAGE,
+        page * ITEMS_PER_PAGE
+    )
+
     return (
-        <div className="flex flex-col gap-4 max-w-xl mx-auto w-full pb-16">
-            <h2 className="text-xl font-semibold text-white mb-2">Your Quizzes</h2>
+        <div className="space-y-5 mx-auto max-w-full w-full px-4">
+            <QuizHeader
+                onSearchAction={(val) => { setSearch(val); setPage(1); }}
+                onFilterChangeAction={(val) => { setFilter(val); setPage(1); }}
+            />
 
-            {quizzes.length > 0 ? (
-                quizzes.map((quiz) => (
-                    <Card
-                        key={quiz.id}
-                        className="bg-neutral-900/60 border border-neutral-900/60 hover:border-1 hover:border-[#34E8B0]/50 transition-all rounded-xl group"
-                    >
-                        <CardHeader className="flex flex-row items-center justify-between px-4">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 rounded-md bg-[#34E8B0]/10">
-                                    <Image
-                                        src="/Icons/File.svg"
-                                        width={20}
-                                        height={20}
-                                        alt="Quiz Icon"
-                                    />
-                                </div>
-                                <div>
-                                    <CardTitle className="text-white text-sm font-medium">
-                                        {quiz.title}
-                                    </CardTitle>
-                                    <p className="text-neutral-400 text-xs">
-                                        {quiz.questions} questions
-                                    </p>
-                                </div>
-                            </div>
+            <QuizGrid quizzes={paginatedQuizzes} isFiltered={search.trim() !== "" || filter !== "all"} />
 
-                            {/* Dots Menu */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="text-neutral-400 hover:text-[#34E8B0] hover:bg-[#34E8B0]/10 rounded-md"
-                                    >
-                                        <MoreVertical className="w-4 h-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent
-                                    align="end"
-                                    className="w-36 bg-neutral-900 border border-neutral-800 text-sm text-white"
-                                >
-                                    <DropdownMenuItem className="hover:bg-[#34E8B0]/10 cursor-pointer">
-                                        Open
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="hover:bg-[#34E8B0]/10 cursor-pointer">
-                                        Rename
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="hover:bg-[#34E8B0]/10 cursor-pointer">
-                                        Share
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="text-red-400 hover:text-red-500 hover:bg-red-500/10 cursor-pointer">
-                                        Delete
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </CardHeader>
-                    </Card>
-                ))
-            ) : (
-                <div className="text-center text-neutral-500 mt-10">
-                    No quizzes yet. Generate one using your workspace prompts.
-                </div>
+            {filteredQuizzes.length > 0 && (
+                <QuizPagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChangeAction={setPage}
+                />
             )}
         </div>
-    );
+    )
 }
